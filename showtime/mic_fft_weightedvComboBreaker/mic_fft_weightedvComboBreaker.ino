@@ -177,51 +177,6 @@ void setup() {
 
 void loop() {
 
-  float x = CircuitPlayground.motionX();
-  float y = CircuitPlayground.motionY();
-  float z = CircuitPlayground.motionZ();
-  if (x < 0) {
-    x = x * (-1);
-  }
-
-  if (y < 0) {
-    y = y * (-1);
-  }
-
-  if (z < 0) {
-    z = z * (-1);
-  }
-
-  float average = (x + y + z) / 3;
-
-  float movement = avg_offset - average;
-  if (movement < 0) {
-    movement = movement * -1;
-  }
-
-  //if not moving Twinkle
-  Serial.println(movement);
-  if (movement < 0.30) {
-
-    int q = 0;
-    int led_to_light_1 = random(0, (12 + 1));
-    //killEmAll();
-
-    for (int i = 0; i < brightness_white; i++) {
-      pixels.setPixelColor(led_to_light_1, i, i, i);
-      pixels.show();
-      delayMicroseconds(delay_white);
-    }
-
-    for (int i = brightness_white; i > -1; i--) {
-      pixels.setPixelColor(led_to_light_1, i, i, i);
-      pixels.show();
-      delayMicroseconds(delay_white);
-    }
-
-
-
-
     //changes the rolling threshold for audio function while in twinkle
 
     uint16_t spectrum[32]; // FFT spectrum output buffer
@@ -305,19 +260,7 @@ void loop() {
                                pgm_read_byte(&gamma8[g]),
                                pgm_read_byte(&gamma8[b]));
           pixels.show();
-        
-
-      
-
-
-
-
-
-
-    delay(100);
-  }
-
-  else { // Audio
+    // Audio
     uint16_t spectrum[32]; // FFT spectrum output buffer
 
     CircuitPlayground.mic.fft(spectrum);
@@ -435,7 +378,6 @@ void loop() {
     pixels.show();
 
     if (++frameIdx >= FRAMES) frameIdx = 0;
-  }
   delay(100);
   Serial.flush();
   x_prev = x;
